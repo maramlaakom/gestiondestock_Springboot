@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifier Article</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/forms.css}">
+</head>
+<body class="page-form">
+<div class="form-container">
+    <h2><i class="bi bi-pencil-square"></i> Modifier l'article</h2>
+
+    <form th:action="@{/article/updatearticle}" th:object="${article}" method="POST">
+        <input type="hidden" th:field="*{idArticle}">
+
+        <div class="mb-4">
+            <label class="form-label">Nom de l'article <span class="required-star">*</span></label>
+            <input type="text" th:field="*{nomArticle}" class="form-control" placeholder="nom article" required>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label">Modèle</label>
+            <input type="text" th:field="*{modele}" class="form-control" placeholder="modele">
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label">Magasin <span class="required-star">*</span></label>
+            <select th:field="*{magasin}" class="form-select" required>
+                <option value="">-- Choisir magasin --</option>
+                <!-- th:each ta'وض el foreach mta' PHP -->
+                <option th:each="m : ${magasins}"
+                        th:value="${m.idMagasin}"
+                        th:text="${m.nomMagasin}">
+                </option>
+            </select>
+        </div>
+
+        <hr class="section-divider">
+
+        <div class="mb-4">
+            <label class="form-label">Prix unitaire (DT) <span class="required-star">*</span></label>
+            <input type="number" step="0.01" th:field="*{cout}" class="form-control" required>
+        </div>
+
+        <div class="d-flex gap-3">
+            <button type="submit" class="btn btn-primary w-100">mise a jour </button>
+            <a th:href="@{/article/retrieve-all-article}" class="btn btn-secondary w-100">Annuler</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

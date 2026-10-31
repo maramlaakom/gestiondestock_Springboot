@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sortie Stock</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/forms.css}">
+</head>
+<body class="page-form">
+
+<div class="form-container">
+    <h2>Sortie de Stock</h2>
+
+    <div th:if="${success_message}" class="alert alert-success" th:text="${success_message}"></div>
+    <div th:if="${error_message}" class="alert alert-danger" th:text="${error_message}"></div>
+
+    <form th:action="@{/mouvement/sortie}" method="POST">
+        <input type="hidden" name="idDemande" th:value="${idDemande}">
+
+        <div class="mb-4">
+            <label class="form-label">Article <span class="required-star">*</span></label>
+            <select name="id_article" class="form-select" required>
+                <option value="">-- Choisir article --</option>
+                <option th:each="art : ${articles}"
+                        th:value="${art.idArticle}"
+                        th:text="${art.nomArticle} + ' - ' + ${art.modele} + ' | Stock: ' + ${art.quantite}">
+                </option>
+            </select>
+        </div>
+        <div class="mb-4">
+            <label class="form-label">Quantite entree <span class="required-star">*</span></label>
+            <input type="number" name="quantite" class="form-control" min="1" required placeholder="Entrez la quantité">
+        </div>
+
+        <div class="d-flex gap-3">
+            <button type="submit" class="btn btn-primary w-100">
+                Entrée stock
+            </button>
+
+            <a th:if="${#strings.toLowerCase(role) == 'admin'}"
+               th:href="@{/mouvement/gestionmouvement}"
+               class="btn btn-secondary w-100 d-flex align-items-center justify-content-center"
+               style="height: 48px; text-decoration: none;">
+                Retour
+            </a>
+
+            <a th:if="${#strings.toLowerCase(role) == 'employee' || #strings.toLowerCase(role) == 'employe_stock'}"
+               th:href="@{/employe_stock/index}"
+               class="btn btn-secondary w-100 d-flex align-items-center justify-content-center"
+               style="height: 48px; text-decoration: none;">
+                Retour
+            </a>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

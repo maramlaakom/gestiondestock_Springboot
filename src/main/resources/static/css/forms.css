@@ -1,0 +1,70 @@
+
+.required-star {
+    color: var(--danger);
+}
+.form-control,
+.form-select {
+    border: 2px solid var(--secondary);
+    border-radius: 8px;
+     padding: 12px;
+    font-size: 1rem;
+    line-height: 1.5; 
+}
+.form-label {
+    color: var(--text-muted);
+    font-weight: bold;
+   margin-bottom: 10px;
+    text-align: left;
+   display: block;
+}
+.form-control:hover,
+.form-select:hover {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 .25rem rgba(30,144,255,0.2);
+}
+
+.alert-success {
+    background-color: #e6ffe6;
+    color: var(--success);
+    border-left: 5px solid var(--success);
+}
+
+.alert-danger {
+    background-color: #ffe6e6;
+    color:var(--dange);
+    border-left: 5px solid var(--dange);
+}
+.btn-primary {
+    background-color: #1e90ff  !important;
+       border: none !important;
+        color: white !important;
+        padding: 10px 25px;
+        font-weight: bold;
+        border-radius: 5px;
+        font-size: 1rem;
+        transition: background 0.3s ease;
+        white-space: nowrap; 
+         text-decoration: none;     
+}
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+      
+}
+
+.btn-secondary {
+     background-color: #87ceeb ;
+       border: none ;
+        color: white ;
+        padding: 8px 30px ;
+        font-weight: bold;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: background 0.3s ease;
+        white-space: nowrap;
+         text-decoration: none;
+       
+}
+
+.btn-secondary:hover {
+    background-color: #5cb9e8;
+}

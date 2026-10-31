@@ -1,0 +1,60 @@
+.sidebar {
+    width: 250px;
+    min-width: 250px;
+    height: 100vh;
+    border-right: 2px solid var(--secondary);
+    display: flex;
+    flex-direction: column;
+    position:  relative ;
+     overflow-y: auto;
+}
+.sidebar-header {
+    padding: 25px;
+    text-align: center;
+    border-bottom: 2px solid var(--secondary);
+}
+.sidebar-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    border-bottom: 2px solid var(--secondary); 
+  
+}
+.nav-menu {
+    flex: 1;
+    padding: 20px 0;
+}
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 25px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: var(--text-muted);
+      font-weight: bold;
+    transition: 0.3s;
+}
+.menu-item:hover {
+    background: #e6f7ff;
+    color: var(--primary);
+}
+.logout-section {
+    padding: 20px;
+    border-top: 2px solid var(--secondary);
+}
+
+.btn-logout {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--danger);
+    transition: 0.3s;
+}
+
+.btn-logout:hover {
+    background: #fff5f5;
+}
+

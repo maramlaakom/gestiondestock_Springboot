@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter Utilisateur</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/forms.css}">
+</head>
+<body class="page-form">
+<div class="form-container">
+    <h2 class="text-center mb-4">
+        <i class="bi bi-person-plus"></i> Ajouter Utilisateur
+    </h2>
+
+    <form th:action="@{/user/adduser}" th:object="${user}" method="POST">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Nom <span class="required-star">*</span></label>
+                <input type="text" th:field="*{nom}" class="form-control" placeholder="Nom" required>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Prenom <span class="required-star">*</span></label>
+                <input type="text" th:field="*{prenom}" class="form-control" placeholder="Prénom" required>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Email <span class="required-star">*</span></label>
+            <input type="email" th:field="*{email}" class="form-control" placeholder="exemple@mail.com" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Mot de passe <span class="required-star">*</span></label>
+            <input type="password" th:field="*{motDePasse}" class="form-control" placeholder="••••••••" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label"> confirm Mot de passe <span class="required-star">*</span></label>
+        <input type="password" name="confirmPassword" class="form-control"  placeholder="••••••••" required>
+        </div>
+        <div class="mb-4">
+            <label class="form-label">Role <span class="required-star">*</span></label>
+            <select th:field="*{role}" class="form-select" required>
+                <option value="">-- Choisir role --</option>
+                <option value="admin">Admin</option>
+                <option value="employee">Employe</option>
+            </select>
+        </div>
+
+        <div class="d-flex gap-3">
+            <button type="submit" class="btn btn-primary w-100">Ajouter</button>
+            <a th:href="@{/utilisateur/list}" class="btn btn-secondary w-100 text-center text-decoration-none">
+                Annuler
+            </a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

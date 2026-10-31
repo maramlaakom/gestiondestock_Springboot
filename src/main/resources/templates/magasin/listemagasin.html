@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link th:href="@{/css/cards.css}" rel="stylesheet">
+    <link th:href="@{/css/base.css}" rel="stylesheet">
+    <title>Gestion des Magasins</title>
+</head>
+<body>
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-building"></i> Gestion des Magasins</h2>
+        <a th:if="${role != null and role.name() == 'admin'}" th:href="@{/magasin/add}" class="btn btn-primary">Ajouter Magasin</a>    </div>
+
+    <form method="GET" th:action="@{/magasin/retrieve-all-Magasin}" class="mb-5">
+        <div class="input-group">
+            <input type="text" name="search" th:value="${search}" class="form-control" placeholder="Rechercher par nom de magasin...">
+            <button class="btn btn-primary" type="submit">Rechercher</button>
+        </div>
+    </form>
+
+    <div class="row g-4">
+        <div class="col-md-4" th:each="m : ${magasins}">
+            <div class="user-card shadow-sm p-4 bg-white rounded-3">
+
+                <h4 class="fw-bold text-dark" th:text="${m.nomMagasin}">Nom Magasin</h4>
+                <p class="text-primary small" th:text="${m.adresse}">Adresse Magasin</p>
+
+                <div class="mb-4" th:with="totalQte=${totalsMap[m.idMagasin] != null ? totalsMap[m.idMagasin] : 0},
+                           percent=${(totalQte * 100.0) / CAPACITE_DEFAUT}">
+
+                    <div class="d-flex justify-content-between small fw-bold">
+                        <span>Utilisation</span>
+                        <span th:text="${totalQte} + ' / ' + ${CAPACITE_DEFAUT}">0 / 2000</span>
+                    </div>
+
+                    <div class="progress mt-1" style="height: 10px;">
+                        <div class="progress-bar"
+                             th:classappend="${percent > 85 ? 'bg-danger' : (percent > 50 ? 'bg-warning' : 'bg-success')}"
+                             th:style="'width: ' + ${percent > 100 ? 100 : percent} + '%'">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-2 mb-4">
+                    <div class="col-6">
+                        <div class="border rounded p-2 text-center bg-light">
+                            <h3 th:text="${m.articles != null ? m.articles.size() : 0}">0</h3>
+                            <small class="text-muted">Articles</small>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="border rounded p-2 text-center bg-light">
+                            <h3 th:text="${totalsMap[m.idMagasin] != null ? totalsMap[m.idMagasin] : 0}">0</h3>
+                            <small class="text-muted">Total Qte</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <span class="small fw-bold text-muted d-block mb-1">CONTENU :</span>
+                    <div class="bg-light p-2 rounded" style="max-height: 150px; overflow-y: auto;">
+
+                        <div th:each="art : ${m.articles}" class="d-flex justify-content-between small border-bottom py-1">
+                            <span th:text="${art.nomArticle}">Nom de l'article</span>
+                            <span class="badge bg-white text-primary border" th:text="${art.quantite}">0</span>
+                        </div>
+
+                        <div th:if="${#lists.isEmpty(m.articles)}" class="text-center text-muted small py-2">
+                            Magasin vide
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2"   th:if="${role != null and role.name() == 'admin'}">
+                    <a th:href="@{/magasin/update/{id}(id=${m.idMagasin})}" class="btn btn-outline-primary flex-grow-1">
+                        Modifier
+                    </a>
+
+                    <form th:action="@{/magasin/delete}" method="POST" class="d-inline flex-grow-0">
+                        <input type="hidden" name="magasinId" th:value="${m.idMagasin}">
+                        <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce magasin ?')">
+                            Supprimer
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${#lists.isEmpty(magasins)}" class="alert alert-info text-center mt-4">
+        <i class="bi bi-info-circle me-2"></i> Aucun magasin trouvé.
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Utilisateurs</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/cards.css}">
+</head>
+<body>
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="mb-0"><i class="bi bi-shield-check"></i> Gestion des Utilisateurs</h2>
+            <p class="text-muted small">Gérer les utilisateurs et leurs permissions</p>
+        </div>
+        <a th:href="@{/user/adduser}" class="btn btn-primary shadow-sm">
+            <i class="bi bi-plus-lg"></i> Nouvel Utilisateur
+        </a>
+    </div>
+
+    <div th:if="${successMessage}" class="alert alert-success text-center mb-4" th:text="${successMessage}"></div>
+
+    <div class="search-container mb-4">
+        <form method="GET" th:action="@{/user/retrieve-all-user}">
+            <div class="input-group">
+                <input type="text" name="search" th:value="${search}" class="form-control p-3" placeholder="Rechercher...">
+                <button class="btn btn-primary px-4" type="submit"><i class="bi bi-search"></i></button>
+            </div>
+        </form>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-12" th:if="${#lists.isEmpty(listauser)}">
+            <div class="no-results shadow-sm text-center p-5 bg-white rounded">
+                <i class="bi bi-person-x" style="font-size: 4rem; color: #6c757d;"></i>
+                <h4 class="mt-3 fw-bold text-primary">Aucun utilisateur trouvé</h4>
+                <p class="text-muted">Essayez une autre recherche ou ajoutez un nouvel utilisateur</p>
+            </div>
+        </div>
+
+        <div class="col-md-4" th:unless="${#lists.isEmpty(listauser)}" th:each="u : ${listauser}">
+            <div class="user-card shadow-sm p-4 bg-white rounded h-100 d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start mb-4">
+                    <div class="avatar-circle">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <span class="badge rounded-pill px-3 py-2"
+                          th:classappend="${u.role == 'Admin' ? 'bg-danger' : 'bg-primary'}"
+                          th:text="${u.role}">
+                    </span>
+                </div>
+
+                <h5 class="fw-bold mb-1 text-primary" th:text="${u.nom} + ' ' + ${u.prenom}">Nom Prenom</h5>
+                <p class="text-muted small mb-4" th:text="${u.email}">exemple@mail.com</p>
+
+                <div class="mb-4">
+                    <label class="text-muted small d-block mb-1 fw-bold">Permissions</label>
+                    <span class="small text-dark"
+                          th:text="${u.role == 'Admin' ? 'Tous les acces' : 'Sorties, entrees, Transferts, Consultation'}">
+                    </span>
+                </div>
+
+                <div class="mb-4">
+                    <span class="small text-primary fw-bold" th:text="${u.etatCompte != null ? #strings.capitalize(u.etatCompte) : 'Actif'}">
+                        Actif
+                    </span>
+                </div>
+
+                <div class="d-flex gap-2 border-top pt-3 mt-auto">
+                    <a th:href="@{/user/update/{id}(id=${u.idUtilisateur})}" class="btn btn-outline-primary flex-grow-1">
+                        <i class="bi bi-pencil-square"></i> Modifier
+                    </a>
+                    <form th:action="@{/user/delete}" method="POST" style="display:inline;" class="flex-grow-1">
+                        <input type="hidden" name="userId" th:value="${u.idUtilisateur}">
+                        <button type="submit" class="btn btn-outline-danger w-100"
+                                onclick="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?')">
+                            <i class="bi bi-trash"></i> Supprimer
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

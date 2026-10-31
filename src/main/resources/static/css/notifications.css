@@ -1,0 +1,115 @@
+.main-container {
+    max-width: 900px;
+    margin: 40px auto;
+}
+.header{  
+    display: flex;             
+    justify-content: space-between;
+    align-items: center;         
+    margin-bottom: 3rem;           
+}
+.header h2{
+    border:none; 
+    padding:0; 
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+.notif-no-lu {
+    background: #d5e9ff;
+    border-left: 5px solid var(--primary);
+      border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+.notif-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+.section-divider {
+    margin-top: 0;
+    height: 1px;
+    background-color: #e5e5e5;
+}
+.no-notif {
+    border: none;                         
+    border-radius: 1rem;                 
+    padding: 3rem;                        
+    text-align: center;                   
+    background: var(--secondary);         
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075); 
+}
+.no-notif i  {
+    font-size: 3rem;     
+    color: #f8f9fa;    
+    margin-bottom: 1rem;  
+}
+.bouton {
+    display: inline-flex;                   
+    align-items: center;                     
+    justify-content: center;                  
+
+    height: 32px;                           
+
+    padding: 0 1rem;                          
+    font-size: 0.875rem;                     
+
+    background-color:var(--bg);                
+    color: #212529;                     
+
+    border: 1px solid #dee2e6;         
+    border-radius: 50rem;                    
+
+    text-decoration: none;                 
+
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075); 
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.bouton:hover {
+    background-color:var( --secondary);       
+}
+.icon-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    margin-right: 20px;
+}
+
+.bg-stock {
+    background: #fff0f0;
+    color: var(--danger);
+}
+
+.bg-info {
+    background: var(--secondary)!important;
+    color: var( --bg);
+}
+.notif-content h6 {
+    margin: 0 0 5px;
+    font-weight: bold;
+}
+.notif-content p{
+     font-size: 0.9rem;
+    line-height: 1.4;
+    color: #000;      
+    margin-bottom: 0.5rem;  
+}
+
+.notif-time {
+    font-size: .8rem;
+    color: #a3aed0;
+    margin-top: 8px;
+}

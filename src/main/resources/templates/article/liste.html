@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link th:href="@{/css/cards.css}" rel="stylesheet">
+    <link th:href="@{/css/base.css}" rel="stylesheet">
+    <style>
+        .bg1 { background-color: #7cbbff ; color: black; }
+        .bg2 { background-color: #ff6f59 ; color: black }
+    </style>
+    <title>Catalogue des Articles</title>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-box-seam"></i> Gestion des Articles</h2>
+
+
+            <a th:if="${role != null and role.name() == 'admin'}"
+               th:href="@{/article/add}" class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i> Ajouter Article
+            </a>
+
+    </div>
+    <!-- El Search Form b-Thymeleaf -->
+    <div class="mb-4">
+        <form th:action="@{/article/retrieve-all-article}" method="get" class="input-group">
+            <input type="text" name="search" th:value="${search}" class="form-control" placeholder="Rechercher...">
+            <button class="btn btn-primary">Rechercher</button>
+        </form>
+    </div>
+
+    <!-- Affichage des Cards -->
+    <div class="row">
+        <!-- th:each m-blasat el foreach mta' PHP -->
+        <div class="col-md-4 mb-4" th:each="a : ${listarticle}">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <!-- Badge dynamique kima l-PHP mte3ek -->
+                    <span th:class="${a.quantite > 20} ? 'badge badge-primary' : 'badge badge-danger'"
+                          th:text="${a.quantite} + ' articles'"></span>
+
+                    <h5 class="card-title mt-2" th:text="${a.nomArticle}">Nom Article</h5>
+                    <p class="small">
+                        <strong>Modèle:</strong> <span th:text="${a.modele}"></span><br>
+                        <strong>Magasin:</strong> <span th:text="${a.magasin.nomMagasin}"></span>
+                    </p>
+                    <p class="text-primary fw-bold" th:text="${a.cout} + ' DT'"></p>
+
+
+                    <div class="d-flex gap-2"  th:if="${role != null and role.name() == 'admin'}">
+                        <a th:href="@{/article/update/{id}(id=${a.idArticle})}" class="btn btn-outline-primary btn-sm">Modifier</a>
+
+                        <form th:action="@{/article/delete}" method="post">
+                            <input type="hidden" name="articleId" th:value="${a.idArticle}"/>
+
+                            <button type="submit"
+                                    class="btn btn-outline-danger btn-sm"
+                                    onclick="return confirm('Etes-vous sur de vouloir supprimer cet article ?')">
+                                Supprimer
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ken l-list fergha
+    <div th:if="${#lists.isEmpty(articles)}" class="alert alert-info">
+        Aucun article trouvé.
+    </div>
+    -->
+</div>
+</body>
+</html>

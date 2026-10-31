@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifier Article</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/forms.css}">
+</head>
+<body class="page-form">
+<div class="form-container">
+    <h2 class="text-center">Ajouter un Article</h2>
+
+    <!-- Affichage des messages (kima l-PHP mte3ek) -->
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+    <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+
+    <form th:action="@{/article/ajoutarticle}" th:object="${article}" method="POST">
+        <div class="mb-3">
+            <label class="form-label">Nom de l'article <span class="required-star">*</span></label>
+            <input type="text" th:field="*{nomArticle}" class="form-control" required>
+            <p class="text-danger" th:if="${#fields.hasErrors('nomArticle')}" th:errors="*{nomArticle}"></p>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Modèle <span class="required-star">*</span></label>
+            <input type="text" th:field="*{modele}" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Magasin <span class="required-star">*</span></label>
+            <select th:field="*{magasin}" class="form-select" required>
+                <option value="">-- Choisir magasin --</option>
+                <option th:each="m : ${magasins}" th:value="${m.idMagasin}" th:text="${m.nomMagasin}"></option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label">Prix unitaire (DT) <span class="required-star">*</span></label>
+            <input type="number" step="0.01" th:field="*{cout}" class="form-control" min="0" required>
+        </div>
+
+        <div class="d-flex gap-3">
+            <button type="submit" class="btn btn-primary w-100">Ajouter</button>
+            <a th:href="@{/article/retrieve-all-article}" class="btn btn-secondary w-100">Annuler</a>
+        </div>
+    </form>
+</div>
+</body>

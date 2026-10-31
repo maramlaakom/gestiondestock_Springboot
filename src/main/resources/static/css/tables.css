@@ -1,0 +1,25 @@
+.table thead th {
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-size: .85rem;
+    text-align:center;
+}
+.badge-msg {
+    display: block;
+    line-height: 1.4;
+    padding: 12px;
+     background: #f0f7ff;
+    color: var(--primary);
+    border-radius: 8px;
+}
+.btn-accept {
+    background: var(--primary);
+    color: white;
+    border-radius: 8px;
+}
+.btn-reject {
+    background: #ffefef;
+    color: var(--danger);
+    border-radius: 8px;
+}
+
